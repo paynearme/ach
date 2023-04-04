@@ -4,9 +4,9 @@ module ACH
     # these are used to convert non ascii characters to UTF-8
 
     ENCODING_OPTIONS = {
-      :invalid           => :replace,  # Replace invalid byte sequences
-      :undef             => :replace,  # Replace anything not defined in ASCII
-      :replace           => '',        # Use a blank for those replacements
+      invalid: :replace, # Replace invalid byte sequences
+      undef: :replace, # Replace anything not defined in ASCII
+      replace: "" # Use a blank for those replacements
     }
 
     # NOTE: the msg parameter is unused and should be removed when the API can change
@@ -53,7 +53,7 @@ module ACH
           if RUBY_VERSION < '1.9'
             val = Iconv.conv('ASCII//IGNORE', 'UTF8', val)
           else
-            val = val.encode Encoding.find('ASCII'), ENCODING_OPTIONS
+            val = val.encode("ASCII", **ENCODING_OPTIONS)
           end
         end
 
