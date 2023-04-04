@@ -1,4 +1,4 @@
-require 'holidays'
+require "holidays"
 
 module ACH
   class NextFederalReserveEffectiveDate
@@ -30,7 +30,7 @@ module ACH
     end
 
     def holiday?(date)
-      Holidays.on(date, :federal_reserve, :observed).any?
+      Holidays.on(date, :federalreserve, :observed).any?
     end
 
     def holiday_or_weekend?(date)
