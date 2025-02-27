@@ -1,28 +1,22 @@
 PATH
   remote: .
   specs:
-    ach (0.5.10)
-      holidays (>= 1.2.0, < 5.4.0)
+    ach (0.5.12)
+      holidays (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    appraisal (2.4.0)
+    ZenTest (4.11.2)
+    appraisal (2.1.0)
       bundler
       rake
       thor (>= 0.14.0)
-    autotest (5.0.0)
-      minitest-autotest (~> 1.0)
-    diff-lcs (1.4.4)
-    holidays (5.3.0)
-    minitest (5.14.4)
-    minitest-autotest (1.1.1)
-      minitest-server (~> 1.0)
-      path_expander (~> 1.0)
-    minitest-server (1.0.6)
-      minitest (~> 5.0)
-    path_expander (1.1.0)
-    rake (13.0.3)
+    autotest (4.4.6)
+      ZenTest (>= 4.4.1)
+    diff-lcs (1.2.5)
+    holidays (7.1.0)
+    rake (11.3.0)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
