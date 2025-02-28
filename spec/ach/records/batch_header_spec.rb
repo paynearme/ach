@@ -36,25 +36,22 @@ describe ACH::Records::BatchHeader do
   end
 
   describe '#settlement_date' do
-    it 'should be exactly three digits' do
+    it 'should be a date' do
       expect { @record.settlement_date = '0' }.
         to raise_error(ACH::InvalidError)
       expect { @record.settlement_date = '0000' }.
         to raise_error(ACH::InvalidError)
-      expect { @record.settlement_date = '000' }.not_to raise_error
+      expect { @record.settlement_date = Date.today }.not_to raise_error
     end
 
-    it 'should contain only digits' do
-      expect { @record.settlement_date = '0A0' }.
-        to raise_error(ACH::InvalidError)
+    it 'should be stringified as a 3-digit day of year' do
+      @record.settlement_date = Date.ordinal(2013, 1)
+      expect(@record.settlement_date_to_ach).to eq('001')
     end
 
-    it 'should contain only three spaces' do
-      expect { @record.settlement_date = '   ' }.not_to raise_error
-      expect { @record.settlement_date = '  ' }.
-        to raise_error(ACH::InvalidError)
-      expect { @record.settlement_date = '    ' }.
-        to raise_error(ACH::InvalidError)
+    it 'should be stringified as 3 spaces if nil' do
+      @record.settlement_date = nil
+      expect(@record.settlement_date_to_ach).to eq('   ')
     end
   end
 end
