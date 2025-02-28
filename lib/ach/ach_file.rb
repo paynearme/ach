@@ -85,7 +85,7 @@ module ACH
 
     def parse_fixed data
       # replace with a space to preserve the record-lengths
-      encoded_data = data.encode(Encoding.find('ASCII'),{:invalid => :replace, :undef => :replace, :replace => ' '})
+      encoded_data = data.encode(Encoding.find('ASCII'), invalid: :replace, undef: :replace, replace: ' ')
       parse encoded_data.scan(/.{94}/).join("\n")
     end
 
@@ -126,6 +126,11 @@ module ACH
           bh.company_entry_description      = line[53..62].strip
           bh.company_descriptive_date       = Date.parse(line[63..68]) rescue nil # this can be various formats
           bh.effective_entry_date           = Date.parse(line[69..74])
+          settlement_date_day_of_year       = line[75..77].to_i
+          if settlement_date_day_of_year.positive?
+            settlement_date_year = settlement_date_day_of_year < fh.transmission_datetime.yday ? fh.transmission_datetime.year + 1 : fh.transmission_datetime.year
+            bh.settlement_date   = Date.ordinal(settlement_date_year, settlement_date_day_of_year) rescue nil
+          end
           bh.originating_dfi_identification = line[79..86].strip
         when '6'
           ed = ACH::CtxEntryDetail.new

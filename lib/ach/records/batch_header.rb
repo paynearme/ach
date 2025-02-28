@@ -28,8 +28,9 @@ module ACH::Records
         lambda { Time.now }
     field :effective_entry_date, Time,
         lambda { |f| f.strftime('%y%m%d')}
-    field :settlement_date, String,
-        lambda { |f| f.to_s }, '   ', /\A([0-9]{3}| {3})\z/
+    field :settlement_date, Date,
+        lambda { |f| f.nil? ? '   ' : f.yday.to_s.rjust(3, '0') }, -> { nil },
+        lambda { |f| f.nil? || f.is_a?(Date) }
     const_field :originator_status_code, '1'
     field :originating_dfi_identification, String,
         nil, nil, /\A\d{8}\z/

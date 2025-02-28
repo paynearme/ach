@@ -41,6 +41,7 @@ describe "Parse" do
       expect(bh.company_descriptive_date).to eq(Date.parse('121015'))
       expect(bh.effective_entry_date).to eq(Date.parse('121015'))
       expect(bh.originating_dfi_identification).to eq("99222222")
+      expect(bh.settlement_date).to be_nil
 
       ed = batch.entries[0]
       expect(ed.transaction_code).to eq("21")
@@ -62,6 +63,7 @@ describe "Parse" do
       expect(batch.entries.size).to eq(1)
       bh = batch.header
       expect(bh.standard_entry_class_code).to eq('PPD')
+      expect(bh.settlement_date).to eq(Date.new(2012, 12, 25))
       ed = batch.entries[0]
       expect(ed.amount).to eq(2536)
 
@@ -71,6 +73,14 @@ describe "Parse" do
       expect(ad.reason_code).to eq('R07')
       expect(ad.original_entry_trace_number).to eq('992222220280393')
       expect(ad.addenda_information).to eq('INVALID')
+
+      batch = ach.batches[2]
+      expect(batch.entries.size).to eq(1)
+      bh = batch.header
+      expect(bh.standard_entry_class_code).to eq('PPD')
+      expect(bh.settlement_date).to eq(Date.new(2013, 1, 20))
+      ed = batch.entries[0]
+      expect(ed.amount).to eq(2417)
     end
 
     it 'should raise an appropriate error if the type code was not recognized' do
