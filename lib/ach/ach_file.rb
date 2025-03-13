@@ -132,6 +132,7 @@ module ACH
             bh.settlement_date   = Date.ordinal(settlement_date_year, settlement_date_day_of_year) rescue nil
           end
           bh.originating_dfi_identification = line[79..86].strip
+          bh.batch_number                   = line[87..94].to_i
         when '6'
           ed = ACH::CtxEntryDetail.new
           ed.transaction_code               = line[1..2]

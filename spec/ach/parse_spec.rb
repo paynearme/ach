@@ -42,6 +42,7 @@ describe "Parse" do
       expect(bh.effective_entry_date).to eq(Date.parse('121015'))
       expect(bh.originating_dfi_identification).to eq("99222222")
       expect(bh.settlement_date).to be_nil
+      expect(bh.batch_number).to eq(1)
 
       ed = batch.entries[0]
       expect(ed.transaction_code).to eq("21")
@@ -64,6 +65,7 @@ describe "Parse" do
       bh = batch.header
       expect(bh.standard_entry_class_code).to eq('PPD')
       expect(bh.settlement_date).to eq(Date.new(2012, 12, 25))
+      expect(bh.batch_number).to eq(2)
       ed = batch.entries[0]
       expect(ed.amount).to eq(2536)
 
@@ -79,6 +81,7 @@ describe "Parse" do
       bh = batch.header
       expect(bh.standard_entry_class_code).to eq('PPD')
       expect(bh.settlement_date).to eq(Date.new(2013, 1, 20))
+      expect(bh.batch_number).to eq(3)
       ed = batch.entries[0]
       expect(ed.amount).to eq(2417)
     end

@@ -54,4 +54,11 @@ describe ACH::Records::BatchHeader do
       expect(@record.settlement_date_to_ach).to eq('   ')
     end
   end
+
+  describe '#batch_number' do
+    it 'should be stringified as a 7-digit number' do
+      @record.batch_number = 1
+      expect(@record.batch_number_to_ach).to eq('0000001')
+    end
+  end
 end
